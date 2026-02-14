@@ -13,7 +13,7 @@ This roadmap delivers a complete Go CLI for Zoho Admin and Mail operations acros
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Authentication** - Auth infrastructure, config, output formatting, and rate limiting that all commands depend on (Completed: 2026-02-14)
-- [ ] **Phase 2: Admin -- Users & Groups** - Full user and group management, proving the API pipeline end-to-end
+- [x] **Phase 2: Admin -- Users & Groups** - Full user and group management, proving the API pipeline end-to-end (Completed: 2026-02-14)
 - [ ] **Phase 3: Admin -- Domains & Audit** - Domain management with DNS verification, plus audit and security log access
 - [ ] **Phase 4: Mail -- Read Operations** - Read, search, and organize email from the terminal
 - [ ] **Phase 5: Mail -- Send, Settings & Admin** - Compose, reply, forward email with attachments, plus mail settings and admin controls
@@ -51,9 +51,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md -- Admin API client layer (AdminClient, PageIterator, types) and user list/get commands
-- [ ] 02-02-PLAN.md -- User create/update/activate/deactivate/delete commands
-- [ ] 02-03-PLAN.md -- Group management commands (list, get, create, update, delete, member add/remove)
+- [x] 02-01-PLAN.md -- Admin API client layer (AdminClient, PageIterator, types) and user list/get commands
+- [x] 02-02-PLAN.md -- User create/update/activate/deactivate/delete commands
+- [x] 02-03-PLAN.md -- Group management commands (list, get, create, update, delete, member add/remove)
 
 ### Phase 3: Admin -- Domains & Audit
 **Goal**: Users can manage domains (including DNS verification) and access audit/security logs without touching the Zoho web console
@@ -127,7 +127,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Authentication | 3/3 | ✓ Complete | 2026-02-14 |
-| 2. Admin -- Users & Groups | 0/3 | Not started | - |
+| 2. Admin -- Users & Groups | 3/3 | ✓ Complete | 2026-02-14 |
 | 3. Admin -- Domains & Audit | 0/2 | Not started | - |
 | 4. Mail -- Read Operations | 0/2 | Not started | - |
 | 5. Mail -- Send, Settings & Admin | 0/3 | Not started | - |
