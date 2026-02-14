@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Admin -- Domains & Audit** - Domain management with DNS verification, plus audit and security log access (Completed: 2026-02-14)
 - [x] **Phase 4: Mail -- Read Operations** - Read, search, and organize email from the terminal (Completed: 2026-02-14)
 - [x] **Phase 5: Mail -- Send, Settings & Admin** - Compose, reply, forward email with attachments, plus mail settings and admin controls (Completed: 2026-02-14)
-- [ ] **Phase 6: CLI Polish & Power User UX** - Desire-path shortcuts, dry-run, shell completion, and scripting flags
+- [x] **Phase 6: CLI Polish & Power User UX** - Desire-path shortcuts, dry-run, shell completion, and scripting flags (Completed: 2026-02-14)
 
 ## Phase Details
 
@@ -114,9 +114,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md -- Global scripting flags, results-only output, desire-path shortcuts, and schema command
-- [ ] 06-02-PLAN.md -- Dry-run preview and --force confirmation bypass for all mutating commands
-- [ ] 06-03-PLAN.md -- Shell completion generation (bash, zsh, fish) via kongplete
+- [x] 06-01-PLAN.md -- Global scripting flags, results-only output, desire-path shortcuts, and schema command
+- [x] 06-02-PLAN.md -- Dry-run preview and --force confirmation bypass for all mutating commands
+- [x] 06-03-PLAN.md -- Shell completion generation (bash, zsh, fish) via kongplete
 
 ## Progress
 
@@ -131,4 +131,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Admin -- Domains & Audit | 2/2 | ✓ Complete | 2026-02-14 |
 | 4. Mail -- Read Operations | 2/2 | ✓ Complete | 2026-02-14 |
 | 5. Mail -- Send, Settings & Admin | 3/3 | ✓ Complete | 2026-02-14 |
-| 6. CLI Polish & Power User UX | 0/3 | Not started | - |
+| 6. CLI Polish & Power User UX | 3/3 | ✓ Complete | 2026-02-14 |
