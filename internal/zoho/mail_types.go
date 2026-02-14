@@ -137,3 +137,40 @@ type AttachmentListResponse struct {
 	} `json:"status"`
 	Data []Attachment `json:"data"`
 }
+
+// SendEmailRequest represents a request to send an email
+type SendEmailRequest struct {
+	FromAddress string                 `json:"fromAddress"`
+	ToAddress   string                 `json:"toAddress"`
+	CcAddress   string                 `json:"ccAddress,omitempty"`
+	BccAddress  string                 `json:"bccAddress,omitempty"`
+	Subject     string                 `json:"subject"`
+	Content     string                 `json:"content"`
+	MailFormat  string                 `json:"mailFormat,omitempty"` // "html" or "plaintext"
+	Action      string                 `json:"action,omitempty"`     // "reply", "replyall", "forward"
+	Attachments []AttachmentReference `json:"attachments,omitempty"`
+}
+
+// AttachmentReference represents an uploaded attachment reference
+type AttachmentReference struct {
+	StoreName      string `json:"storeName"`
+	AttachmentName string `json:"attachmentName"`
+	AttachmentPath string `json:"attachmentPath"`
+}
+
+// AttachmentUploadResponse is the response for attachment upload
+type AttachmentUploadResponse struct {
+	Status struct {
+		Code        int    `json:"code"`
+		Description string `json:"description"`
+	} `json:"status"`
+	Data AttachmentReference `json:"data"`
+}
+
+// SendEmailResponse is the response for send email
+type SendEmailResponse struct {
+	Status struct {
+		Code        int    `json:"code"`
+		Description string `json:"description"`
+	} `json:"status"`
+}
