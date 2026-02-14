@@ -125,9 +125,10 @@ type AdminAuditCmd struct {
 
 // MailCmd holds mail subcommands
 type MailCmd struct {
-	Folders  MailFoldersCmd  `cmd:"" help:"Manage mail folders"`
-	Labels   MailLabelsCmd   `cmd:"" help:"Manage mail labels"`
-	Messages MailMessagesCmd `cmd:"" help:"Manage messages"`
+	Folders     MailFoldersCmd     `cmd:"" help:"Manage mail folders"`
+	Labels      MailLabelsCmd      `cmd:"" help:"Manage mail labels"`
+	Messages    MailMessagesCmd    `cmd:"" help:"Manage messages"`
+	Attachments MailAttachmentsCmd `cmd:"" help:"Manage attachments"`
 }
 
 // MailFoldersCmd holds folder subcommands
@@ -142,8 +143,16 @@ type MailLabelsCmd struct {
 
 // MailMessagesCmd holds message subcommands
 type MailMessagesCmd struct {
-	List MailMessagesListCmd `cmd:"" help:"List messages in a folder"`
-	Get  MailMessagesGetCmd  `cmd:"" help:"Get full message details"`
+	List   MailMessagesListCmd   `cmd:"" help:"List messages in a folder"`
+	Get    MailMessagesGetCmd    `cmd:"" help:"Get full message details"`
+	Search MailMessagesSearchCmd `cmd:"" help:"Search messages with query filters"`
+	Thread MailMessagesThreadCmd `cmd:"" help:"View all messages in a thread"`
+}
+
+// MailAttachmentsCmd holds attachment subcommands
+type MailAttachmentsCmd struct {
+	List     MailAttachmentsListCmd     `cmd:"" help:"List attachments for a message"`
+	Download MailAttachmentsDownloadCmd `cmd:"" help:"Download an attachment"`
 }
 
 // VersionCmd shows version information
