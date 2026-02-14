@@ -6,6 +6,7 @@ require (
 	github.com/99designs/keyring v1.2.2
 	github.com/adrg/xdg v0.5.3
 	github.com/alecthomas/kong v1.14.0
+	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/charmbracelet/lipgloss/v2 v2.0.0-beta1
 	github.com/gofrs/flock v0.13.0
 	github.com/muesli/termenv v0.16.0
@@ -13,6 +14,7 @@ require (
 	github.com/yosuke-furukawa/json5 v0.1.1
 	golang.org/x/oauth2 v0.35.0
 	golang.org/x/term v0.40.0
+	golang.org/x/time v0.14.0
 )
 
 require (
