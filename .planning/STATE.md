@@ -9,19 +9,19 @@ See: .planning/PROJECT.md (updated 2026-02-14)
 
 ## Current Position
 
-Phase: 3 of 6 (Admin -- Domains & Audit)
-Plan: 2 of 2 in current phase
+Phase: 4 of 6 (Mail Read Operations)
+Plan: 1 of 2 in current phase
 Status: Complete
-Last activity: 2026-02-14 -- Phase 3 complete (domain management and audit commands)
+Last activity: 2026-02-14 -- Phase 4 Plan 1 complete (mail client infrastructure and read commands)
 
-Progress: [████░░░░░░] 44.4% (8/18 plans)
+Progress: [█████░░░░░] 50.0% (9/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 4.9 min
-- Total execution time: 39 min
+- Total plans completed: 9
+- Average duration: 4.7 min
+- Total execution time: 42 min
 
 **By Phase:**
 
@@ -30,20 +30,21 @@ Progress: [████░░░░░░] 44.4% (8/18 plans)
 | 01 | 3/3 | 14 min | 4.7 min |
 | 02 | 3/3 | 15 min | 5.0 min |
 | 03 | 2/2 | 10 min | 5.0 min |
+| 04 | 1/2 | 3 min | 3.0 min |
 
 **Recent Executions:**
 
 | Phase-Plan | Duration | Tasks | Files | Date |
 |------------|----------|-------|-------|------|
+| 04-01 | 3 min | 2 | 5 | 2026-02-14 |
 | 03-01 | 5 min | 2 | 4 | 2026-02-14 |
 | 03-02 | 5 min | 2 | 5 | 2026-02-14 |
 | 02-02 | 8 min | 2 | 2 | 2026-02-14 |
 | 02-03 | 3 min | 2 | 4 | 2026-02-14 |
-| 02-01 | 4 min | 2 | 5 | 2026-02-14 |
 
 **Recent Trend:**
-- Last 3 plans: 6.0 min average
-- Trend: Stable velocity
+- Last 3 plans: 4.3 min average
+- Trend: Improving velocity
 
 ## Accumulated Context
 
@@ -85,6 +86,10 @@ Recent decisions affecting current work:
 - [Phase 03-02]: 90-day validation in AdminClient — Login history API limitation, fail fast with clear error vs cryptic API response
 - [Phase 03-02]: Informational commands for sessions/security — No documented API endpoints, web console redirect provides better UX than "not implemented"
 - [Phase 03-02]: Empty string enum default — Kong requires default value for optional enums, allows --search-by to be truly optional
+- [Phase 04-01]: MailClient caches primary accountID on initialization (mirrors AdminClient's cached zoid pattern)
+- [Phase 04-01]: All mail requests use DoMail (MailBase URL) instead of Do (APIBase URL) - fundamental architectural difference from AdminClient
+- [Phase 04-01]: Display structs for timestamp formatting (unix ms to human-readable) - Column doesn't support Transform field
+- [Phase 04-01]: Three-tier message retrieval: GetMessageMetadata + GetMessageContent = complete view (two API calls)
 
 ### Pending Todos
 
@@ -98,7 +103,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-14T19:15:17Z
-Stopped at: Completed Phase 3 (both plans: domain management and audit commands)
+Last session: 2026-02-14T19:18:51Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
-Next: Phase 3 complete. Ready for Phase 4 (Mail Read) or verify phase
+Next: Phase 4 Plan 2 (message operations: move, delete, update, search)
