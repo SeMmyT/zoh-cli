@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Admin -- Users & Groups** - Full user and group management, proving the API pipeline end-to-end (Completed: 2026-02-14)
 - [x] **Phase 3: Admin -- Domains & Audit** - Domain management with DNS verification, plus audit and security log access (Completed: 2026-02-14)
 - [x] **Phase 4: Mail -- Read Operations** - Read, search, and organize email from the terminal (Completed: 2026-02-14)
-- [ ] **Phase 5: Mail -- Send, Settings & Admin** - Compose, reply, forward email with attachments, plus mail settings and admin controls
+- [x] **Phase 5: Mail -- Send, Settings & Admin** - Compose, reply, forward email with attachments, plus mail settings and admin controls (Completed: 2026-02-14)
 - [ ] **Phase 6: CLI Polish & Power User UX** - Desire-path shortcuts, dry-run, shell completion, and scripting flags
 
 ## Phase Details
@@ -97,9 +97,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Send email operations (compose, reply, forward) with two-step attachment upload
-- [ ] 05-02-PLAN.md -- Mail settings commands (signatures, vacation auto-reply, display name, forwarding)
-- [ ] 05-03-PLAN.md -- Mail admin commands (retention policies, spam allowlists/blocklists, delivery logs)
+- [x] 05-01-PLAN.md -- Send email operations (compose, reply, forward) with two-step attachment upload
+- [x] 05-02-PLAN.md -- Mail settings commands (signatures, vacation auto-reply, display name, forwarding)
+- [x] 05-03-PLAN.md -- Mail admin commands (retention policies, spam allowlists/blocklists, delivery logs)
 
 ### Phase 6: CLI Polish & Power User UX
 **Goal**: Power users get shortcuts, scripting flags, and shell integration that make zoh fast and composable in pipelines
@@ -130,5 +130,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. Admin -- Users & Groups | 3/3 | ✓ Complete | 2026-02-14 |
 | 3. Admin -- Domains & Audit | 2/2 | ✓ Complete | 2026-02-14 |
 | 4. Mail -- Read Operations | 2/2 | ✓ Complete | 2026-02-14 |
-| 5. Mail -- Send, Settings & Admin | 0/3 | Not started | - |
+| 5. Mail -- Send, Settings & Admin | 3/3 | ✓ Complete | 2026-02-14 |
 | 6. CLI Polish & Power User UX | 0/3 | Not started | - |
