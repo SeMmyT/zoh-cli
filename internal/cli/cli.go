@@ -130,6 +130,7 @@ type MailCmd struct {
 	Messages    MailMessagesCmd    `cmd:"" help:"Manage messages"`
 	Attachments MailAttachmentsCmd `cmd:"" help:"Manage attachments"`
 	Send        MailSendCmd        `cmd:"" help:"Send email messages"`
+	Settings    MailSettingsCmd    `cmd:"" help:"Manage mail settings"`
 }
 
 // MailFoldersCmd holds folder subcommands
@@ -161,6 +162,38 @@ type MailSendCmd struct {
 	Compose MailSendComposeCmd `cmd:"" help:"Compose and send a new email"`
 	Reply   MailSendReplyCmd   `cmd:"" help:"Reply to a message"`
 	Forward MailSendForwardCmd `cmd:"" help:"Forward a message"`
+}
+
+// MailSettingsCmd holds settings subcommands
+type MailSettingsCmd struct {
+	Signatures  MailSettingsSignaturesCmd  `cmd:"" help:"Manage email signatures"`
+	Vacation    MailSettingsVacationCmd    `cmd:"" help:"Manage vacation auto-reply"`
+	DisplayName MailSettingsDisplayNameCmd `cmd:"display-name" help:"Manage account display name"`
+	Forwarding  MailSettingsForwardingCmd  `cmd:"" help:"View forwarding settings"`
+}
+
+// MailSettingsSignaturesCmd holds signature subcommands
+type MailSettingsSignaturesCmd struct {
+	List   MailSettingsSignaturesListCmd   `cmd:"" help:"List all email signatures"`
+	Create MailSettingsSignaturesCreateCmd `cmd:"" help:"Create a new email signature"`
+}
+
+// MailSettingsVacationCmd holds vacation auto-reply subcommands
+type MailSettingsVacationCmd struct {
+	Get     MailSettingsVacationGetCmd     `cmd:"" help:"View vacation auto-reply settings"`
+	Set     MailSettingsVacationSetCmd     `cmd:"" help:"Enable vacation auto-reply"`
+	Disable MailSettingsVacationDisableCmd `cmd:"" help:"Disable vacation auto-reply"`
+}
+
+// MailSettingsDisplayNameCmd holds display name subcommands
+type MailSettingsDisplayNameCmd struct {
+	Get MailSettingsDisplayNameGetCmd `cmd:"" help:"View account display name"`
+	Set MailSettingsDisplayNameSetCmd `cmd:"" help:"Update account display name"`
+}
+
+// MailSettingsForwardingCmd holds forwarding subcommands
+type MailSettingsForwardingCmd struct {
+	Get MailSettingsForwardingGetCmd `cmd:"" help:"View forwarding settings"`
 }
 
 // VersionCmd shows version information
