@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & Authentication** - Auth infrastructure, config, output formatting, and rate limiting that all commands depend on (Completed: 2026-02-14)
 - [x] **Phase 2: Admin -- Users & Groups** - Full user and group management, proving the API pipeline end-to-end (Completed: 2026-02-14)
 - [x] **Phase 3: Admin -- Domains & Audit** - Domain management with DNS verification, plus audit and security log access (Completed: 2026-02-14)
-- [ ] **Phase 4: Mail -- Read Operations** - Read, search, and organize email from the terminal
+- [x] **Phase 4: Mail -- Read Operations** - Read, search, and organize email from the terminal (Completed: 2026-02-14)
 - [ ] **Phase 5: Mail -- Send, Settings & Admin** - Compose, reply, forward email with attachments, plus mail settings and admin controls
 - [ ] **Phase 6: CLI Polish & Power User UX** - Desire-path shortcuts, dry-run, shell completion, and scripting flags
 
@@ -82,8 +82,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Mail API client layer (MailClient, mail types), folder/label listing, and message list/get commands
-- [ ] 04-02-PLAN.md -- Search query builder, message search, thread view, and attachment list/download
+- [x] 04-01-PLAN.md -- Mail API client layer (MailClient, mail types), folder/label listing, and message list/get commands
+- [x] 04-02-PLAN.md -- Search query builder, message search, thread view, and attachment list/download
 
 ### Phase 5: Mail -- Send, Settings & Admin
 **Goal**: Users can compose and send email (with attachments), manage mail settings, and administer mail policies from the terminal
@@ -129,6 +129,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Foundation & Authentication | 3/3 | ✓ Complete | 2026-02-14 |
 | 2. Admin -- Users & Groups | 3/3 | ✓ Complete | 2026-02-14 |
 | 3. Admin -- Domains & Audit | 2/2 | ✓ Complete | 2026-02-14 |
-| 4. Mail -- Read Operations | 0/2 | Planned | - |
+| 4. Mail -- Read Operations | 2/2 | ✓ Complete | 2026-02-14 |
 | 5. Mail -- Send, Settings & Admin | 0/3 | Not started | - |
 | 6. CLI Polish & Power User UX | 0/3 | Not started | - |
