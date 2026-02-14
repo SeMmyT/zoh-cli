@@ -47,6 +47,7 @@ Progress: [█████████░] 83.3% (15/18 plans)
 **Recent Trend:**
 - Last 3 plans: 3.0 min average
 - Trend: Excellent velocity
+| Phase 06 P02 | 6 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -114,6 +115,8 @@ Recent decisions affecting current work:
 - [Phase 06-01]: Schema command uses Kong introspection API for single source of truth
 - [Phase 06-03]: Kong parser separation (Must + Parse) - kongplete.Complete() must intercept between parser creation and argument parsing
 - [Phase 06-03]: File predictor for attachment paths - Tab-completion for file paths improves UX, reduces typos
+- [Phase 06-02]: Dry-run output to stderr with [DRY RUN] prefix for clean stdout piping
+- [Phase 06-02]: --force bypasses --confirm on delete operations for scripting support
 
 ### Pending Todos
 
