@@ -240,3 +240,94 @@ type ForwardSettings struct {
 	ForwardTo string `json:"forwardTo"`
 	KeepCopy  bool   `json:"keepCopy"`
 }
+
+// SpamCategory represents spam filter category types
+type SpamCategory string
+
+// Spam category constants for allowlist/blocklist operations
+const (
+	// Email allowlist/blocklist
+	WhiteListEmail    SpamCategory = "WhiteListEmail"
+	SpamEmail         SpamCategory = "SpamEmail"
+	RejectEmail       SpamCategory = "RejectEmail"
+	QuarantineEmail   SpamCategory = "QuarantineEmail"
+	TrustedEmail      SpamCategory = "TrustedEmail"
+
+	// Domain allowlist/blocklist
+	WhiteListDomain   SpamCategory = "WhiteListDomain"
+	SpamDomain        SpamCategory = "SpamDomain"
+	RejectDomain      SpamCategory = "RejectDomain"
+	QuarantineDomain  SpamCategory = "QuarantineDomain"
+	TrustedDomain     SpamCategory = "TrustedDomain"
+	SpamTLD           SpamCategory = "SpamTLD"
+	RejectTLD         SpamCategory = "RejectTLD"
+	QuarantineTLD     SpamCategory = "QuarantineTLD"
+
+	// IP allowlist/blocklist
+	WhiteListIP       SpamCategory = "WhiteListIP"
+	SpamIP            SpamCategory = "SpamIP"
+	RejectIP          SpamCategory = "RejectIP"
+	QuarantineIP      SpamCategory = "QuarantineIP"
+)
+
+// SpamCategoryMap provides CLI-friendly name mapping to Zoho API enum values
+var SpamCategoryMap = map[string]SpamCategory{
+	"allowlist-email":     WhiteListEmail,
+	"blocklist-email":     SpamEmail,
+	"reject-email":        RejectEmail,
+	"quarantine-email":    QuarantineEmail,
+	"trusted-email":       TrustedEmail,
+	"allowlist-domain":    WhiteListDomain,
+	"blocklist-domain":    SpamDomain,
+	"reject-domain":       RejectDomain,
+	"quarantine-domain":   QuarantineDomain,
+	"trusted-domain":      TrustedDomain,
+	"blocklist-tld":       SpamTLD,
+	"reject-tld":          RejectTLD,
+	"quarantine-tld":      QuarantineTLD,
+	"allowlist-ip":        WhiteListIP,
+	"blocklist-ip":        SpamIP,
+	"reject-ip":           RejectIP,
+	"quarantine-ip":       QuarantineIP,
+}
+
+// SpamListEntry represents a spam list entry for display
+type SpamListEntry struct {
+	Category SpamCategory
+	Value    string
+}
+
+// SpamUpdateRequest represents a request to update spam settings
+type SpamUpdateRequest struct {
+	SpamCategory string   `json:"spamCategory"`
+	Value        []string `json:"Value"` // Capital V matches Zoho API
+}
+
+// SpamSettingsResponse is the response for get spam settings
+type SpamSettingsResponse struct {
+	Status struct {
+		Code        int    `json:"code"`
+		Description string `json:"description"`
+	} `json:"status"`
+	Data []string `json:"data"`
+}
+
+// DeliveryLog represents a mail delivery log entry
+type DeliveryLog struct {
+	MessageID    string `json:"messageId"`
+	Subject      string `json:"subject"`
+	FromAddress  string `json:"fromAddress"`
+	ToAddress    string `json:"toAddress"`
+	Status       string `json:"status"`
+	SentTime     string `json:"sentTime"`
+	DeliveryTime string `json:"deliveryTime"`
+}
+
+// DeliveryLogListResponse is the response for delivery logs
+type DeliveryLogListResponse struct {
+	Status struct {
+		Code        int    `json:"code"`
+		Description string `json:"description"`
+	} `json:"status"`
+	Data []DeliveryLog `json:"data"`
+}
