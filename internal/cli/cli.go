@@ -71,8 +71,10 @@ type ConfigCmd struct {
 
 // AdminCmd holds admin subcommands
 type AdminCmd struct {
-	Users  AdminUsersCmd  `cmd:"" help:"Manage organization users"`
-	Groups AdminGroupsCmd `cmd:"" help:"Manage organization groups"`
+	Users   AdminUsersCmd   `cmd:"" help:"Manage organization users"`
+	Groups  AdminGroupsCmd  `cmd:"" help:"Manage organization groups"`
+	Domains AdminDomainsCmd `cmd:"" help:"Manage organization domains"`
+	Audit   AdminAuditCmd   `cmd:"" help:"View audit logs and security information"`
 }
 
 // AdminUsersCmd holds user subcommands
@@ -100,6 +102,24 @@ type AdminGroupsCmd struct {
 type AdminGroupsMembersCmd struct {
 	Add    AdminGroupsMembersAddCmd    `cmd:"" help:"Add members to a group"`
 	Remove AdminGroupsMembersRemoveCmd `cmd:"" help:"Remove members from a group"`
+}
+
+// AdminDomainsCmd holds domain subcommands
+type AdminDomainsCmd struct {
+	List   AdminDomainsListCmd   `cmd:"" help:"List all domains"`
+	Get    AdminDomainsGetCmd    `cmd:"" help:"Get domain details"`
+	Add    AdminDomainsAddCmd    `cmd:"" help:"Add a new domain"`
+	Verify AdminDomainsVerifyCmd `cmd:"" help:"Verify domain ownership"`
+	Update AdminDomainsUpdateCmd `cmd:"" help:"Update domain settings"`
+}
+
+// AdminAuditCmd holds audit and security subcommands
+type AdminAuditCmd struct {
+	Logs         AdminAuditLogsCmd         `cmd:"" help:"View admin action audit logs"`
+	LoginHistory AdminAuditLoginHistoryCmd `cmd:"login-history" help:"View login history (90-day retention)"`
+	SMTPLogs     AdminAuditSMTPLogsCmd     `cmd:"smtp-logs" help:"View SMTP transaction logs"`
+	Sessions     AdminAuditSessionsCmd     `cmd:"" help:"View active sessions"`
+	Security     AdminAuditSecurityCmd     `cmd:"" help:"View security policy settings"`
 }
 
 // VersionCmd shows version information
