@@ -17,6 +17,7 @@ type CLI struct {
 
 	Auth    AuthCmd    `cmd:"" help:"Authentication commands"`
 	Config  ConfigCmd  `cmd:"" help:"Configuration commands"`
+	Admin   AdminCmd   `cmd:"" help:"Admin operations"`
 	Version VersionCmd `cmd:"" help:"Show version information"`
 }
 
@@ -66,6 +67,17 @@ type ConfigCmd struct {
 	Unset ConfigUnsetCmd      `cmd:"" help:"Remove a configuration value"`
 	List  ConfigListConfigCmd `cmd:"" name:"list" help:"List all configuration values"`
 	Path  ConfigPathCmd       `cmd:"" help:"Show config file path"`
+}
+
+// AdminCmd holds admin subcommands
+type AdminCmd struct {
+	Users AdminUsersCmd `cmd:"" help:"User operations"`
+}
+
+// AdminUsersCmd holds user subcommands
+type AdminUsersCmd struct {
+	List AdminUsersListCmd `cmd:"" help:"List organization users"`
+	Get  AdminUsersGetCmd  `cmd:"" help:"Get user details"`
 }
 
 // VersionCmd shows version information
