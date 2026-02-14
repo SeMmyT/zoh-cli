@@ -19,7 +19,7 @@ type MailSendComposeCmd struct {
 	Subject string   `help:"Email subject" required:""`
 	Body    string   `help:"Email body content" required:""`
 	HTML    bool     `help:"Send as HTML (default: plain text)" name:"html"`
-	Attach  []string `help:"File path(s) to attach (repeatable)" name:"attach"`
+	Attach  []string `help:"File path(s) to attach (repeatable)" name:"attach" predictor:"file"`
 }
 
 // Run executes the compose command
@@ -81,7 +81,7 @@ type MailSendReplyCmd struct {
 	Folder    string   `help:"Folder name or ID" required:"" short:"f"`
 	Body      string   `help:"Reply body content" required:""`
 	HTML      bool     `help:"Send as HTML (default: plain text)" name:"html"`
-	Attach    []string `help:"File path(s) to attach (repeatable)" name:"attach"`
+	Attach    []string `help:"File path(s) to attach (repeatable)" name:"attach" predictor:"file"`
 	All       bool     `help:"Reply to all recipients" name:"all"`
 }
 
@@ -179,7 +179,7 @@ type MailSendForwardCmd struct {
 	To        string   `help:"Recipient email address" required:""`
 	Body      string   `help:"Additional message body" default:""`
 	HTML      bool     `help:"Send as HTML (default: plain text)" name:"html"`
-	Attach    []string `help:"File path(s) to attach (repeatable)" name:"attach"`
+	Attach    []string `help:"File path(s) to attach (repeatable)" name:"attach" predictor:"file"`
 }
 
 // Run executes the forward command

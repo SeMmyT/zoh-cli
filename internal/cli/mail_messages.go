@@ -478,7 +478,7 @@ type MailAttachmentsDownloadCmd struct {
 	AttachmentID string `arg:"" help:"Attachment ID to download"`
 	MessageID    string `help:"Message ID (required)" required:""`
 	Folder       string `help:"Folder name or ID (required)" short:"f" required:""`
-	OutputPath   string `help:"Output file path (default: attachment name)" name:"output-path"`
+	OutputPath   string `help:"Output file path (default: attachment name)" name:"output-path" predictor:"file"`
 }
 
 // Run executes the download attachment command

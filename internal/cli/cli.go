@@ -26,6 +26,9 @@ type CLI struct {
 	Send MailSendComposeCmd `cmd:"" help:"Send an email (shortcut for mail send compose)" hidden:""`
 	Ls   LsCmd              `cmd:"" help:"List resources (users, groups, folders, labels)" hidden:""`
 
+	// Shell completion
+	Completion CompletionCmd `cmd:"" help:"Shell completion commands"`
+
 	// Introspection
 	Schema  SchemaCmd  `cmd:"" help:"Show machine-readable command tree as JSON"`
 	Version VersionCmd `cmd:"" help:"Show version information"`

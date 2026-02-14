@@ -5,8 +5,10 @@ import (
 	"os"
 
 	"github.com/alecthomas/kong"
+	"github.com/posener/complete"
 	"github.com/semmy-space/zoh/internal/cli"
 	"github.com/semmy-space/zoh/internal/output"
+	"github.com/willabides/kongplete"
 )
 
 var (
@@ -14,9 +16,9 @@ var (
 )
 
 func main() {
-	// Parse CLI
 	cliInstance := &cli.CLI{}
-	ctx := kong.Parse(cliInstance,
+
+	parser := kong.Must(cliInstance,
 		kong.Name("zoh"),
 		kong.Description("Zoho CLI for Admin and Mail operations"),
 		kong.UsageOnError(),
@@ -28,8 +30,16 @@ func main() {
 		},
 	)
 
-	// Run command with bound dependencies
-	err := ctx.Run()
+	// Wire shell completion — intercepts tab-completion requests before normal parsing
+	kongplete.Complete(parser,
+		kongplete.WithPredictor("file", complete.PredictFiles("*")),
+	)
+
+	// Parse and run
+	ctx, err := parser.Parse(os.Args[1:])
+	parser.FatalIfErrorf(err)
+
+	err = ctx.Run()
 	if err != nil {
 		// Handle error with proper exit code
 		if cliErr, ok := err.(*output.CLIError); ok {
