@@ -118,12 +118,73 @@
 
 ## Traceability
 
-<!-- Updated by roadmap creation — maps REQ-IDs to phases -->
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated by roadmapper) | | |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| AUTH-07 | Phase 1 | Pending |
+| AUTH-08 | Phase 1 | Pending |
+| AUTH-09 | Phase 1 | Pending |
+| AUTH-10 | Phase 1 | Pending |
+| AUTH-11 | Phase 1 | Pending |
+| AUTH-12 | Phase 1 | Pending |
+| UX-01 | Phase 1 | Pending |
+| UX-02 | Phase 1 | Pending |
+| UX-04 | Phase 1 | Pending |
+| UX-09 | Phase 1 | Pending |
+| ADMIN-USR-01 | Phase 2 | Pending |
+| ADMIN-USR-02 | Phase 2 | Pending |
+| ADMIN-USR-03 | Phase 2 | Pending |
+| ADMIN-USR-04 | Phase 2 | Pending |
+| ADMIN-USR-05 | Phase 2 | Pending |
+| ADMIN-USR-06 | Phase 2 | Pending |
+| ADMIN-GRP-01 | Phase 2 | Pending |
+| ADMIN-GRP-02 | Phase 2 | Pending |
+| ADMIN-GRP-03 | Phase 2 | Pending |
+| ADMIN-GRP-04 | Phase 2 | Pending |
+| ADMIN-GRP-05 | Phase 2 | Pending |
+| ADMIN-GRP-06 | Phase 2 | Pending |
+| ADMIN-DOM-01 | Phase 3 | Pending |
+| ADMIN-DOM-02 | Phase 3 | Pending |
+| ADMIN-DOM-03 | Phase 3 | Pending |
+| ADMIN-DOM-04 | Phase 3 | Pending |
+| ADMIN-DOM-05 | Phase 3 | Pending |
+| ADMIN-AUD-01 | Phase 3 | Pending |
+| ADMIN-AUD-02 | Phase 3 | Pending |
+| ADMIN-AUD-03 | Phase 3 | Pending |
+| ADMIN-AUD-04 | Phase 3 | Pending |
+| MAIL-READ-01 | Phase 4 | Pending |
+| MAIL-READ-02 | Phase 4 | Pending |
+| MAIL-READ-03 | Phase 4 | Pending |
+| MAIL-READ-04 | Phase 4 | Pending |
+| MAIL-READ-05 | Phase 4 | Pending |
+| MAIL-READ-06 | Phase 4 | Pending |
+| MAIL-READ-07 | Phase 4 | Pending |
+| MAIL-SEND-01 | Phase 5 | Pending |
+| MAIL-SEND-02 | Phase 5 | Pending |
+| MAIL-SEND-03 | Phase 5 | Pending |
+| MAIL-SEND-04 | Phase 5 | Pending |
+| MAIL-SEND-05 | Phase 5 | Pending |
+| MAIL-SET-01 | Phase 5 | Pending |
+| MAIL-SET-02 | Phase 5 | Pending |
+| MAIL-SET-03 | Phase 5 | Pending |
+| MAIL-SET-04 | Phase 5 | Pending |
+| MAIL-ADM-01 | Phase 5 | Pending |
+| MAIL-ADM-02 | Phase 5 | Pending |
+| MAIL-ADM-03 | Phase 5 | Pending |
+| MAIL-ADM-04 | Phase 5 | Pending |
+| UX-03 | Phase 6 | Pending |
+| UX-05 | Phase 6 | Pending |
+| UX-06 | Phase 6 | Pending |
+| UX-07 | Phase 6 | Pending |
+| UX-08 | Phase 6 | Pending |
+| UX-10 | Phase 6 | Pending |
+| UX-11 | Phase 6 | Pending |
 
 ---
 *Requirements defined: 2026-02-14*
-*Total v1 requirements: 55*
+*Total v1 requirements: 64*
