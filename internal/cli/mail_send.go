@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
@@ -23,7 +22,7 @@ type MailSendComposeCmd struct {
 }
 
 // Run executes the compose command
-func (cmd *MailSendComposeCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSendComposeCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would send email:\n")
@@ -41,7 +40,7 @@ func (cmd *MailSendComposeCmd) Run(cfg *config.Config, globals *Globals) error {
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -103,14 +102,14 @@ type MailSendReplyCmd struct {
 }
 
 // Run executes the reply command
-func (cmd *MailSendReplyCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSendReplyCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would reply to message %s (reply-all=%v)\n", cmd.MessageID, cmd.All)
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -206,14 +205,14 @@ type MailSendForwardCmd struct {
 }
 
 // Run executes the forward command
-func (cmd *MailSendForwardCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSendForwardCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would forward message %s to %s\n", cmd.MessageID, cmd.To)
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -278,7 +277,7 @@ func (cmd *MailSendForwardCmd) Run(cfg *config.Config, globals *Globals) error {
 }
 
 // resolveFolderID resolves a folder name to folder ID, fallback to treating input as ID
-func resolveFolderID(ctx context.Context, mc *zoho.MailClient, folderNameOrID string) (string, error) {
+func resolveFolderID(ctx context.Context, mc zoho.MailService, folderNameOrID string) (string, error) {
 	folder, err := mc.GetFolderByName(ctx, folderNameOrID)
 	if err != nil {
 		// If GetFolderByName fails, treat input as folder ID

@@ -5,50 +5,11 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 
-	"github.com/semmy-space/zoh/internal/auth"
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/secrets"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
 
-// newAdminClient creates an AdminClient from config and stored credentials
-func newAdminClient(cfg *config.Config) (*zoho.AdminClient, error) {
-	store, err := secrets.NewStore()
-	if err != nil {
-		return nil, &output.CLIError{
-			Message:  fmt.Sprintf("Failed to initialize secrets store: %v", err),
-			ExitCode: output.ExitGeneral,
-		}
-	}
-
-	tokenCache, err := auth.NewTokenCache(cfg, store)
-	if err != nil {
-		return nil, &output.CLIError{
-			Message:  fmt.Sprintf("Failed to initialize token cache: %v", err),
-			ExitCode: output.ExitGeneral,
-		}
-	}
-
-	adminClient, err := zoho.NewAdminClient(cfg, tokenCache)
-	if err != nil {
-		// Check if it's an authentication error
-		if strings.Contains(err.Error(), "401") || strings.Contains(err.Error(), "unauthorized") {
-			return nil, &output.CLIError{
-				Message:  fmt.Sprintf("Authentication failed: %v\n\nRun: zoh auth login", err),
-				ExitCode: output.ExitAuth,
-			}
-		}
-		return nil, &output.CLIError{
-			Message:  fmt.Sprintf("Failed to create admin client: %v", err),
-			ExitCode: output.ExitAPIError,
-		}
-	}
-
-	return adminClient, nil
-}
 
 // AdminUsersListCmd lists users in the organization
 type AdminUsersListCmd struct {
@@ -57,8 +18,8 @@ type AdminUsersListCmd struct {
 }
 
 // Run executes the list users command
-func (cmd *AdminUsersListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminUsersListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -126,8 +87,8 @@ type AdminUsersGetCmd struct {
 }
 
 // Run executes the get user command
-func (cmd *AdminUsersGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminUsersGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -159,7 +120,7 @@ func (cmd *AdminUsersGetCmd) Run(cfg *config.Config, fp *FormatterProvider) erro
 }
 
 // resolveUserID is a helper that resolves an identifier (email or ZUID) to a ZUID
-func resolveUserID(ctx context.Context, ac *zoho.AdminClient, identifier string) (int64, *zoho.User, error) {
+func resolveUserID(ctx context.Context, ac zoho.AdminService, identifier string) (int64, *zoho.User, error) {
 	// Try to parse as int64 (ZUID)
 	if zuid, err := strconv.ParseInt(identifier, 10, 64); err == nil {
 		user, err := ac.GetUser(ctx, zuid)
@@ -185,14 +146,14 @@ type AdminUsersCreateCmd struct {
 }
 
 // Run executes the create user command
-func (cmd *AdminUsersCreateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminUsersCreateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would create user: %s (firstName=%s, lastName=%s)\n", cmd.Email, cmd.FirstName, cmd.LastName)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -230,14 +191,14 @@ type AdminUsersUpdateCmd struct {
 }
 
 // Run executes the update user command
-func (cmd *AdminUsersUpdateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminUsersUpdateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would update user %s: role=%s\n", cmd.Identifier, cmd.Role)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -284,14 +245,14 @@ type AdminUsersActivateCmd struct {
 }
 
 // Run executes the activate user command
-func (cmd *AdminUsersActivateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminUsersActivateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would activate user: %s\n", cmd.Identifier)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -340,14 +301,14 @@ type AdminUsersDeactivateCmd struct {
 }
 
 // Run executes the deactivate user command
-func (cmd *AdminUsersDeactivateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminUsersDeactivateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would deactivate user: %s\n", cmd.Identifier)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -401,7 +362,7 @@ type AdminUsersDeleteCmd struct {
 }
 
 // Run executes the delete user command
-func (cmd *AdminUsersDeleteCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminUsersDeleteCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Check confirmation requirement (unless --force or --dry-run)
 	if !cmd.Confirm && !globals.Force && !globals.DryRun {
 		return &output.CLIError{
@@ -416,7 +377,7 @@ func (cmd *AdminUsersDeleteCmd) Run(cfg *config.Config, fp *FormatterProvider, g
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}

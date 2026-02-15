@@ -7,7 +7,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
@@ -24,8 +23,8 @@ type SignatureRow struct {
 type MailSettingsSignaturesListCmd struct{}
 
 // Run executes the list signatures command
-func (cmd *MailSettingsSignaturesListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailSettingsSignaturesListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -73,14 +72,14 @@ type MailSettingsSignaturesCreateCmd struct {
 }
 
 // Run executes the create signature command
-func (cmd *MailSettingsSignaturesCreateCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSettingsSignaturesCreateCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would create signature: name=%s\n", cmd.Name)
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -110,8 +109,8 @@ func (cmd *MailSettingsSignaturesCreateCmd) Run(cfg *config.Config, globals *Glo
 type MailSettingsVacationGetCmd struct{}
 
 // Run executes the get vacation command
-func (cmd *MailSettingsVacationGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailSettingsVacationGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -155,7 +154,7 @@ type MailSettingsVacationSetCmd struct {
 }
 
 // Run executes the set vacation command
-func (cmd *MailSettingsVacationSetCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSettingsVacationSetCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Validate date format
 	dateLayout := "01/02/2006 15:04:05"
 	if _, err := time.Parse(dateLayout, cmd.From); err != nil {
@@ -177,7 +176,7 @@ func (cmd *MailSettingsVacationSetCmd) Run(cfg *config.Config, globals *Globals)
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -208,14 +207,14 @@ func (cmd *MailSettingsVacationSetCmd) Run(cfg *config.Config, globals *Globals)
 type MailSettingsVacationDisableCmd struct{}
 
 // Run executes the disable vacation command
-func (cmd *MailSettingsVacationDisableCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSettingsVacationDisableCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would disable vacation auto-reply\n")
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -236,8 +235,8 @@ func (cmd *MailSettingsVacationDisableCmd) Run(cfg *config.Config, globals *Glob
 type MailSettingsDisplayNameGetCmd struct{}
 
 // Run executes the get display name command
-func (cmd *MailSettingsDisplayNameGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailSettingsDisplayNameGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -269,14 +268,14 @@ type MailSettingsDisplayNameSetCmd struct {
 }
 
 // Run executes the set display name command
-func (cmd *MailSettingsDisplayNameSetCmd) Run(cfg *config.Config, globals *Globals) error {
+func (cmd *MailSettingsDisplayNameSetCmd) Run(sp *ServiceProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would update display name to: %s\n", cmd.Name)
 		return nil
 	}
 
-	mailClient, err := newMailClient(cfg)
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -297,8 +296,8 @@ func (cmd *MailSettingsDisplayNameSetCmd) Run(cfg *config.Config, globals *Globa
 type MailSettingsForwardingGetCmd struct{}
 
 // Run executes the get forwarding command
-func (cmd *MailSettingsForwardingGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailSettingsForwardingGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}

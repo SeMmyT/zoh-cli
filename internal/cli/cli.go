@@ -78,6 +78,8 @@ func (c *CLI) BeforeApply(ctx *kong.Context) error {
 	ctx.Bind(cfg)
 	ctx.Bind(formatter)
 	ctx.Bind(&c.Globals)
+	sp := NewServiceProvider(cfg)
+	ctx.Bind(sp)
 
 	return nil
 }

@@ -7,13 +7,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
 
 // resolveGroupID converts a group identifier (email or ZGID) to a ZGID
-func resolveGroupID(ac *zoho.AdminClient, identifier string) (int64, error) {
+func resolveGroupID(ac zoho.AdminService, identifier string) (int64, error) {
 	ctx := context.Background()
 
 	// If identifier contains "@", treat as email
@@ -40,8 +39,8 @@ type AdminGroupsListCmd struct {
 }
 
 // Run executes the list groups command
-func (cmd *AdminGroupsListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminGroupsListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -91,8 +90,8 @@ type AdminGroupsGetCmd struct {
 }
 
 // Run executes the get group command
-func (cmd *AdminGroupsGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminGroupsGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -157,14 +156,14 @@ type AdminGroupsCreateCmd struct {
 }
 
 // Run executes the create group command
-func (cmd *AdminGroupsCreateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminGroupsCreateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would create group: %s (email=%s)\n", cmd.Name, cmd.Email)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -205,7 +204,7 @@ type AdminGroupsUpdateCmd struct {
 }
 
 // Run executes the update group command
-func (cmd *AdminGroupsUpdateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminGroupsUpdateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Require at least one field to update
 	if cmd.Name == "" && cmd.Description == "" {
 		return &output.CLIError{
@@ -220,7 +219,7 @@ func (cmd *AdminGroupsUpdateCmd) Run(cfg *config.Config, fp *FormatterProvider, 
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -256,7 +255,7 @@ type AdminGroupsDeleteCmd struct {
 }
 
 // Run executes the delete group command
-func (cmd *AdminGroupsDeleteCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminGroupsDeleteCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Check confirmation requirement (unless --force or --dry-run)
 	if !cmd.Confirm && !globals.Force && !globals.DryRun {
 		return &output.CLIError{
@@ -271,7 +270,7 @@ func (cmd *AdminGroupsDeleteCmd) Run(cfg *config.Config, fp *FormatterProvider, 
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -308,14 +307,14 @@ type AdminGroupsMembersAddCmd struct {
 }
 
 // Run executes the add group members command
-func (cmd *AdminGroupsMembersAddCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminGroupsMembersAddCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would add %d member(s) to group %s\n", len(cmd.Members), cmd.Group)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -360,14 +359,14 @@ type AdminGroupsMembersRemoveCmd struct {
 }
 
 // Run executes the remove group members command
-func (cmd *AdminGroupsMembersRemoveCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminGroupsMembersRemoveCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would remove %d member(s) from group %s\n", len(cmd.Members), cmd.Group)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}

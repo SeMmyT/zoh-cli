@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 )
 
@@ -13,8 +12,8 @@ import (
 type AdminDomainsListCmd struct{}
 
 // Run executes the list domains command
-func (cmd *AdminDomainsListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminDomainsListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -49,8 +48,8 @@ type AdminDomainsGetCmd struct {
 }
 
 // Run executes the get domain command
-func (cmd *AdminDomainsGetCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminDomainsGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -75,14 +74,14 @@ type AdminDomainsAddCmd struct {
 }
 
 // Run executes the add domain command
-func (cmd *AdminDomainsAddCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminDomainsAddCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Dry-run preview
 	if globals.DryRun {
 		fmt.Fprintf(os.Stderr, "[DRY RUN] Would add domain: %s\n", cmd.Name)
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -128,7 +127,7 @@ type AdminDomainsVerifyCmd struct {
 }
 
 // Run executes the verify domain command
-func (cmd *AdminDomainsVerifyCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminDomainsVerifyCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Map user-friendly method names to API values
 	methodMap := map[string]string{
 		"txt":   "verifyDomainByTXT",
@@ -144,7 +143,7 @@ func (cmd *AdminDomainsVerifyCmd) Run(cfg *config.Config, fp *FormatterProvider,
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -171,7 +170,7 @@ type AdminDomainsUpdateCmd struct {
 }
 
 // Run executes the update domain command
-func (cmd *AdminDomainsUpdateCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
+func (cmd *AdminDomainsUpdateCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
 	// Map user-friendly setting names to API mode values
 	settingMap := map[string]string{
 		"enable-hosting":  "enableHosting",
@@ -189,7 +188,7 @@ func (cmd *AdminDomainsUpdateCmd) Run(cfg *config.Config, fp *FormatterProvider,
 		return nil
 	}
 
-	adminClient, err := newAdminClient(cfg)
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}

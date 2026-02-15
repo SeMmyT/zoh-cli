@@ -8,7 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
@@ -48,8 +47,8 @@ type MailMessagesListCmd struct {
 }
 
 // Run executes the list messages command
-func (cmd *MailMessagesListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailMessagesListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -134,8 +133,8 @@ type MailMessagesGetCmd struct {
 }
 
 // Run executes the get message command
-func (cmd *MailMessagesGetCmd) Run(cfg *config.Config, fp *FormatterProvider, globals *Globals) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailMessagesGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider, globals *Globals) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -249,8 +248,8 @@ type MailMessagesSearchCmd struct {
 }
 
 // Run executes the search messages command
-func (cmd *MailMessagesSearchCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailMessagesSearchCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -352,8 +351,8 @@ type MailMessagesThreadCmd struct {
 }
 
 // Run executes the thread view command
-func (cmd *MailMessagesThreadCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailMessagesThreadCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -425,8 +424,8 @@ type MailAttachmentsListCmd struct {
 }
 
 // Run executes the list attachments command
-func (cmd *MailAttachmentsListCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailAttachmentsListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}
@@ -482,8 +481,8 @@ type MailAttachmentsDownloadCmd struct {
 }
 
 // Run executes the download attachment command
-func (cmd *MailAttachmentsDownloadCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	mailClient, err := newMailClient(cfg)
+func (cmd *MailAttachmentsDownloadCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	mailClient, err := sp.Mail()
 	if err != nil {
 		return err
 	}

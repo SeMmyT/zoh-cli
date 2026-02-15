@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/config"
 	"github.com/semmy-space/zoh/internal/output"
 	"github.com/semmy-space/zoh/internal/zoho"
 )
@@ -41,8 +40,8 @@ type AdminAuditLogsCmd struct {
 }
 
 // Run executes the audit logs command
-func (cmd *AdminAuditLogsCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminAuditLogsCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -119,8 +118,8 @@ type AdminAuditLoginHistoryCmd struct {
 }
 
 // Run executes the login history command
-func (cmd *AdminAuditLoginHistoryCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminAuditLoginHistoryCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -198,8 +197,8 @@ type AdminAuditSMTPLogsCmd struct {
 }
 
 // Run executes the SMTP logs command
-func (cmd *AdminAuditSMTPLogsCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
-	adminClient, err := newAdminClient(cfg)
+func (cmd *AdminAuditSMTPLogsCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
+	adminClient, err := sp.Admin()
 	if err != nil {
 		return err
 	}
@@ -279,7 +278,7 @@ func (cmd *AdminAuditSMTPLogsCmd) Run(cfg *config.Config, fp *FormatterProvider)
 type AdminAuditSessionsCmd struct{}
 
 // Run executes the sessions command
-func (cmd *AdminAuditSessionsCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
+func (cmd *AdminAuditSessionsCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
 	fmt.Fprintln(os.Stderr, "Active session listing is not available via the Zoho Mail API.")
 	fmt.Fprintln(os.Stderr, "View active sessions in the Zoho Admin Console:")
 	fmt.Fprintln(os.Stderr, "  https://mailadmin.zoho.com → Dashboard → Active Sessions")
@@ -290,7 +289,7 @@ func (cmd *AdminAuditSessionsCmd) Run(cfg *config.Config, fp *FormatterProvider)
 type AdminAuditSecurityCmd struct{}
 
 // Run executes the security command
-func (cmd *AdminAuditSecurityCmd) Run(cfg *config.Config, fp *FormatterProvider) error {
+func (cmd *AdminAuditSecurityCmd) Run(sp *ServiceProvider, fp *FormatterProvider) error {
 	fmt.Fprintln(os.Stderr, "Security policy settings (2FA, password policies) are not available via the Zoho Mail API.")
 	fmt.Fprintln(os.Stderr, "Manage security settings in the Zoho Admin Console:")
 	fmt.Fprintln(os.Stderr, "  https://mailadmin.zoho.com → Security & Compliance")
