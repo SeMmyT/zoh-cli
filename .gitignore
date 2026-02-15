@@ -1,0 +1,19 @@
+# Binary
+/zoh
+/zoh.exe
+
+# GoReleaser
+/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude Code
+.claude/
+.planning/
+
+# OS
+.DS_Store
+Thumbs.db
