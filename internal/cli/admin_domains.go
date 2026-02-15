@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zohcli/internal/output"
 )
 
 // AdminDomainsListCmd lists all domains in the organization

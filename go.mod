@@ -1,4 +1,4 @@
-module github.com/SeMmyT/zoh
+module github.com/SeMmyT/zohcli
 
 go 1.24.0
 

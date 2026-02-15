@@ -1,4 +1,4 @@
-# zoh
+# zohcli
 
 A fast, scriptable CLI for Zoho Mail and Admin APIs. Manage users, groups, domains, email, and audit logs from your terminal.
 
@@ -23,10 +23,10 @@ zoh send --to team@company.com --subject "Deploy done" --body "v2.1 is live"
 ## Install
 
 ```bash
-go install github.com/SeMmyT/zoh@latest
+go install github.com/SeMmyT/zohcli@latest
 ```
 
-Or download a binary from [Releases](https://github.com/SeMmyT/zoh/releases).
+Or download a binary from [Releases](https://github.com/SeMmyT/zohcli/releases).
 
 ## Setup
 

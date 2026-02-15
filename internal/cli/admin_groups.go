@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/SeMmyT/zoh/internal/output"
-	"github.com/SeMmyT/zoh/internal/zoho"
+	"github.com/SeMmyT/zohcli/internal/output"
+	"github.com/SeMmyT/zohcli/internal/zoho"
 )
 
 // resolveGroupID converts a group identifier (email or ZGID) to a ZGID

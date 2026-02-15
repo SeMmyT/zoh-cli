@@ -13,7 +13,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zohcli/internal/config"
 )
 
 // AdminClient wraps the Zoho Client with admin-specific functionality

@@ -10,10 +10,10 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/SeMmyT/zoh/internal/auth"
-	"github.com/SeMmyT/zoh/internal/config"
-	"github.com/SeMmyT/zoh/internal/output"
-	"github.com/SeMmyT/zoh/internal/secrets"
+	"github.com/SeMmyT/zohcli/internal/auth"
+	"github.com/SeMmyT/zohcli/internal/config"
+	"github.com/SeMmyT/zohcli/internal/output"
+	"github.com/SeMmyT/zohcli/internal/secrets"
 )
 
 // SetupCmd implements the interactive setup wizard

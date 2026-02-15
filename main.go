@@ -6,9 +6,9 @@ import (
 
 	"github.com/alecthomas/kong"
 	"github.com/posener/complete"
-	"github.com/SeMmyT/zoh/internal/cli"
-	"github.com/SeMmyT/zoh/internal/config"
-	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zohcli/internal/cli"
+	"github.com/SeMmyT/zohcli/internal/config"
+	"github.com/SeMmyT/zohcli/internal/output"
 	"github.com/willabides/kongplete"
 )
 

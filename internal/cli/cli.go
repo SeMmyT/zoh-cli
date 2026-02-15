@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/alecthomas/kong"
-	"github.com/SeMmyT/zoh/internal/config"
-	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zohcli/internal/config"
+	"github.com/SeMmyT/zohcli/internal/output"
 )
 
 // FormatterProvider wraps the formatter interface for Kong binding
@@ -37,8 +37,8 @@ type CLI struct {
 
 // BeforeApply hook runs before any command execution
 // It loads config, resolves region, creates formatter, and binds dependencies
-func (c *CLI) BeforeApply(ctx *kong.Context) error {
-	// Validate flag combinations
+// AfterApply runs after Kong populates flag values, before command execution.
+func (c *CLI) AfterApply(ctx *kong.Context) error {
 	if c.Force && c.DryRun {
 		return fmt.Errorf("cannot use --force with --dry-run")
 	}

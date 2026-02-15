@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zohcli/internal/output"
 )
 
 

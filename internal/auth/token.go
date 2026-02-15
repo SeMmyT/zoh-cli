@@ -12,9 +12,9 @@ import (
 
 	"github.com/adrg/xdg"
 	"github.com/gofrs/flock"
-	"github.com/SeMmyT/zoh/internal/config"
-	"github.com/SeMmyT/zoh/internal/output"
-	"github.com/SeMmyT/zoh/internal/secrets"
+	"github.com/SeMmyT/zohcli/internal/config"
+	"github.com/SeMmyT/zohcli/internal/output"
+	"github.com/SeMmyT/zohcli/internal/secrets"
 	"golang.org/x/oauth2"
 )
 
