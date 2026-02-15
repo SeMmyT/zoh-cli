@@ -18,8 +18,9 @@ import (
 
 // AdminClient wraps the Zoho Client with admin-specific functionality
 type AdminClient struct {
-	client *Client
-	zoid   int64 // Cached organization ID
+	client    *Client
+	zoid      int64  // Cached organization ID
+	accountID string // Cached account ID
 }
 
 // NewAdminClient creates a new AdminClient with the given config and token source
@@ -34,39 +35,50 @@ func NewAdminClient(cfg *config.Config, tokenSource oauth2.TokenSource) (*AdminC
 		client: client,
 	}
 
-	// Resolve organization ID
+	// Resolve organization ID and account ID via /api/accounts
 	ctx := context.Background()
-	zoid, err := ac.getOrganizationID(ctx)
+	zoid, accountID, err := ac.resolveIdentity(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("get organization ID: %w", err)
+		return nil, fmt.Errorf("resolve identity: %w", err)
 	}
 	ac.zoid = zoid
+	ac.accountID = accountID
 
 	return ac, nil
 }
 
-// getOrganizationID fetches the organization ID from the Zoho API
-func (ac *AdminClient) getOrganizationID(ctx context.Context) (int64, error) {
-	resp, err := ac.client.DoMail(ctx, http.MethodGet, "/api/organization", nil)
+// resolveIdentity fetches the organization ID and account ID from /api/accounts.
+// Uses ZohoMail.accounts scope (not the partner-only /api/organization endpoint).
+func (ac *AdminClient) resolveIdentity(ctx context.Context) (zoid int64, accountID string, err error) {
+	resp, err := ac.client.DoMail(ctx, http.MethodGet, "/api/accounts", nil)
 	if err != nil {
-		return 0, fmt.Errorf("request failed: %w", err)
+		return 0, "", fmt.Errorf("request failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return 0, ac.parseErrorResponse(resp)
+		return 0, "", ac.parseErrorResponse(resp)
 	}
 
-	var orgResp OrgResponse
-	if err := json.NewDecoder(resp.Body).Decode(&orgResp); err != nil {
-		return 0, fmt.Errorf("decode response: %w", err)
+	var acctResp AccountsResponse
+	if err := json.NewDecoder(resp.Body).Decode(&acctResp); err != nil {
+		return 0, "", fmt.Errorf("decode response: %w", err)
 	}
 
-	if orgResp.Status.Code != 200 {
-		return 0, fmt.Errorf("API error: %s (code %d)", orgResp.Status.Description, orgResp.Status.Code)
+	if acctResp.Status.Code != 200 {
+		return 0, "", fmt.Errorf("API error: %s (code %d)", acctResp.Status.Description, acctResp.Status.Code)
 	}
 
-	return orgResp.Data.OrganizationID, nil
+	if len(acctResp.Data) == 0 {
+		return 0, "", fmt.Errorf("no accounts found")
+	}
+
+	acct := acctResp.Data[0]
+	if acct.PolicyID.Zoid == 0 {
+		return 0, "", fmt.Errorf("organization ID not found in account data")
+	}
+
+	return acct.PolicyID.Zoid, acct.AccountID, nil
 }
 
 // ListUsers fetches a list of users with pagination
@@ -343,7 +355,7 @@ func (ac *AdminClient) ListGroups(ctx context.Context, start, limit int) ([]Grou
 		return nil, fmt.Errorf("API error: %s (code %d)", groupResp.Status.Description, groupResp.Status.Code)
 	}
 
-	return groupResp.Data, nil
+	return groupResp.Data.Groups, nil
 }
 
 // GetGroup fetches a single group by ZGID
@@ -586,7 +598,7 @@ func (ac *AdminClient) ListDomains(ctx context.Context) ([]Domain, error) {
 		return nil, fmt.Errorf("API error: %s (code %d)", domainResp.Status.Description, domainResp.Status.Code)
 	}
 
-	return domainResp.Data, nil
+	return domainResp.Data.DomainVO, nil
 }
 
 // GetDomain fetches details for a specific domain

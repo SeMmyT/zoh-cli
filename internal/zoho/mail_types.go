@@ -4,11 +4,13 @@ import "encoding/json"
 
 // MailAccount represents a Zoho Mail account
 type MailAccount struct {
-	AccountID          string `json:"accountId"`
-	EmailAddress       string `json:"emailAddress"`
-	AccountDisplayName string `json:"accountDisplayName"`
-	Type               string `json:"type"`
-	Status             string `json:"status"`
+	AccountID           string         `json:"accountId"`
+	EmailAddress        []EmailAddress `json:"emailAddress"`
+	PrimaryEmailAddress string         `json:"primaryEmailAddress"`
+	AccountDisplayName  string         `json:"accountDisplayName"`
+	DisplayName         string         `json:"displayName"`
+	Type                string         `json:"type"`
+	Role                string         `json:"role"`
 }
 
 // MailAccountListResponse is the response for list accounts
@@ -56,17 +58,18 @@ type LabelListResponse struct {
 }
 
 // MessageSummary represents a message in list view
+// Note: Zoho returns most numeric fields as quoted strings in message list responses
 type MessageSummary struct {
 	MessageID     string `json:"messageId"`
 	ThreadID      string `json:"threadId"`
 	Subject       string `json:"subject"`
 	FromAddress   string `json:"fromAddress"`
 	Sender        string `json:"sender"`
-	ReceivedTime  int64  `json:"receivedTime"`  // Unix milliseconds
-	Status        string `json:"status"`        // READ/UNREAD
-	HasAttachment bool   `json:"hasAttachment"`
-	FlagID        int    `json:"flagid"`
-	Priority      int    `json:"priority"`
+	ReceivedTime  string `json:"receivedTime"`  // Unix milliseconds (as string)
+	Status        string `json:"status"`
+	HasAttachment string `json:"hasAttachment"` // "0" or "1"
+	FlagID        string `json:"flagid"`
+	Priority      string `json:"priority"`
 	Summary       string `json:"summary"`
 }
 
@@ -80,6 +83,7 @@ type MessageListResponse struct {
 }
 
 // MessageMetadata represents full message metadata
+// Note: Zoho returns most numeric/boolean fields as quoted strings
 type MessageMetadata struct {
 	MessageID     string `json:"messageId"`
 	ThreadID      string `json:"threadId"`
@@ -89,14 +93,14 @@ type MessageMetadata struct {
 	Sender        string `json:"sender"`
 	ToAddress     string `json:"toAddress"`
 	CcAddress     string `json:"ccAddress"`
-	SentDateInGMT int64  `json:"sentDateInGMT"` // Unix milliseconds
-	ReceivedTime  int64  `json:"receivedTime"`
-	MessageSize   int64  `json:"messageSize"`
-	HasAttachment bool   `json:"hasAttachment"`
-	HasInline     bool   `json:"hasInline"`
+	SentDateInGMT string `json:"sentDateInGMT"` // Unix milliseconds (as string)
+	ReceivedTime  string `json:"receivedTime"`
+	MessageSize   string `json:"messageSize"`
+	HasAttachment string `json:"hasAttachment"` // "0", "1", or "true"/"false"
+	HasInline     string `json:"hasInline"`
 	Status        string `json:"status"`
-	Priority      int    `json:"priority"`
-	FlagID        int    `json:"flagid"`
+	Priority      string `json:"priority"`
+	FlagID        string `json:"flagid"`
 }
 
 // MessageMetadataResponse is the response for message details
@@ -219,10 +223,12 @@ type VacationReply struct {
 
 // AccountDetails represents account details including vacation and forwarding settings
 type AccountDetails struct {
-	AccountDisplayName string          `json:"accountDisplayName"`
-	EmailAddress       string          `json:"emailAddress"`
-	VacationResponse   json.RawMessage `json:"vacationResponse,omitempty"` // for GET
-	ForwardDetails     json.RawMessage `json:"forwardDetails,omitempty"`   // for GET
+	AccountDisplayName  string          `json:"accountDisplayName"`
+	DisplayName         string          `json:"displayName"`
+	PrimaryEmailAddress string          `json:"primaryEmailAddress"`
+	EmailAddress        []EmailAddress  `json:"emailAddress"`
+	VacationResponse    json.RawMessage `json:"vacationResponse,omitempty"`
+	ForwardDetails      json.RawMessage `json:"forwardDetails,omitempty"`
 }
 
 // AccountDetailsResponse is the response for get account details

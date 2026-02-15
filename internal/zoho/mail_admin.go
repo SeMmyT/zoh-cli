@@ -43,10 +43,10 @@ func NewMailAdminClient(cfg *config.Config, tokenSource oauth2.TokenSource) (*Ma
 	return mac, nil
 }
 
-// getOrganizationID fetches the organization ID from the Zoho API
-// Note: Organization endpoint uses APIBase (client.Do), not MailBase
+// getOrganizationID fetches the organization ID via /api/accounts.
+// Uses ZohoMail.accounts scope (not the partner-only /api/organization endpoint).
 func (mac *MailAdminClient) getOrganizationID(ctx context.Context) (string, error) {
-	resp, err := mac.client.Do(ctx, http.MethodGet, "/api/organization/", nil)
+	resp, err := mac.client.DoMail(ctx, http.MethodGet, "/api/accounts", nil)
 	if err != nil {
 		return "", fmt.Errorf("request failed: %w", err)
 	}
@@ -56,16 +56,25 @@ func (mac *MailAdminClient) getOrganizationID(ctx context.Context) (string, erro
 		return "", mac.parseErrorResponse(resp)
 	}
 
-	var orgResp OrgResponse
-	if err := json.NewDecoder(resp.Body).Decode(&orgResp); err != nil {
+	var acctResp AccountsResponse
+	if err := json.NewDecoder(resp.Body).Decode(&acctResp); err != nil {
 		return "", fmt.Errorf("decode response: %w", err)
 	}
 
-	if orgResp.Status.Code != 200 {
-		return "", fmt.Errorf("API error: %s (code %d)", orgResp.Status.Description, orgResp.Status.Code)
+	if acctResp.Status.Code != 200 {
+		return "", fmt.Errorf("API error: %s (code %d)", acctResp.Status.Description, acctResp.Status.Code)
 	}
 
-	return fmt.Sprintf("%d", orgResp.Data.OrganizationID), nil
+	if len(acctResp.Data) == 0 {
+		return "", fmt.Errorf("no accounts found")
+	}
+
+	zoid := acctResp.Data[0].PolicyID.Zoid
+	if zoid == 0 {
+		return "", fmt.Errorf("organization ID not found in account data")
+	}
+
+	return fmt.Sprintf("%d", zoid), nil
 }
 
 // parseErrorResponse attempts to parse an error response from the Zoho API

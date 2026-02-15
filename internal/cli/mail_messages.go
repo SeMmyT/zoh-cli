@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -95,11 +96,11 @@ func (cmd *MailMessagesListCmd) Run(sp *ServiceProvider, fp *FormatterProvider) 
 	rows := make([]MessageListRow, len(messages))
 	for i, msg := range messages {
 		// Format timestamp (unix ms to human readable)
-		timestamp := time.UnixMilli(msg.ReceivedTime).Format("2006-01-02 15:04")
+		timestamp := formatReceivedTime(msg.ReceivedTime)
 
 		// Format attachment indicator
 		attachment := ""
-		if msg.HasAttachment {
+		if msg.HasAttachment == "1" || msg.HasAttachment == "true" {
 			attachment = "Y"
 		}
 
@@ -174,11 +175,11 @@ func (cmd *MailMessagesGetCmd) Run(sp *ServiceProvider, fp *FormatterProvider, g
 		From:          metadata.FromAddress,
 		To:            metadata.ToAddress,
 		Cc:            metadata.CcAddress,
-		Date:          time.UnixMilli(metadata.SentDateInGMT).Format("2006-01-02 15:04:05 MST"),
-		Size:          formatBytes(metadata.MessageSize),
+		Date:          formatReceivedTime(metadata.SentDateInGMT),
+		Size:          formatStringBytes(metadata.MessageSize),
 		Status:        metadata.Status,
-		Priority:      formatPriority(metadata.Priority),
-		HasAttachment: formatBool(metadata.HasAttachment),
+		Priority:      formatStringPriority(metadata.Priority),
+		HasAttachment: metadata.HasAttachment,
 		MessageID:     metadata.MessageID,
 		ThreadID:      metadata.ThreadID,
 		FolderID:      metadata.FolderID,
@@ -220,6 +221,36 @@ func formatBool(value bool) string {
 		return "Yes"
 	}
 	return "No"
+}
+
+// formatReceivedTime converts a string Unix-milliseconds timestamp to human-readable format
+func formatReceivedTime(ms string) string {
+	n, err := strconv.ParseInt(ms, 10, 64)
+	if err != nil || n == 0 {
+		return ms
+	}
+	return time.UnixMilli(n).Format("2006-01-02 15:04")
+}
+
+// formatStringBytes converts a string byte count to human-readable format
+func formatStringBytes(s string) string {
+	n, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		return s
+	}
+	return formatBytes(n)
+}
+
+// formatStringPriority converts a string priority to a label
+func formatStringPriority(s string) string {
+	switch s {
+	case "0", "":
+		return "Normal"
+	case "1":
+		return "High"
+	default:
+		return s
+	}
 }
 
 // formatBody processes HTML content based on output mode
@@ -315,9 +346,9 @@ func (cmd *MailMessagesSearchCmd) Run(sp *ServiceProvider, fp *FormatterProvider
 	// Convert to display rows with formatted fields
 	rows := make([]MessageListRow, len(messages))
 	for i, msg := range messages {
-		timestamp := time.UnixMilli(msg.ReceivedTime).Format("2006-01-02 15:04")
+		timestamp := formatReceivedTime(msg.ReceivedTime)
 		attachment := ""
-		if msg.HasAttachment {
+		if msg.HasAttachment == "1" || msg.HasAttachment == "true" {
 			attachment = "Y"
 		}
 
@@ -381,9 +412,9 @@ func (cmd *MailMessagesThreadCmd) Run(sp *ServiceProvider, fp *FormatterProvider
 	// Convert to display rows
 	rows := make([]MessageListRow, len(messages))
 	for i, msg := range messages {
-		timestamp := time.UnixMilli(msg.ReceivedTime).Format("2006-01-02 15:04")
+		timestamp := formatReceivedTime(msg.ReceivedTime)
 		attachment := ""
-		if msg.HasAttachment {
+		if msg.HasAttachment == "1" || msg.HasAttachment == "true" {
 			attachment = "Y"
 		}
 

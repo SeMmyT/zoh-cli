@@ -168,32 +168,48 @@ func (tc *TokenCache) refreshToken() (*oauth2.Token, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		// Check for invalid_grant error (refresh token revoked/expired)
-		var errorResp struct {
-			Error string `json:"error"`
-		}
-		json.NewDecoder(resp.Body).Decode(&errorResp)
+	// Parse response — Zoho returns errors as HTTP 200, so always parse first
+	var tokenResp struct {
+		AccessToken  string `json:"access_token"`
+		RefreshToken string `json:"refresh_token,omitempty"`
+		ExpiresIn    int    `json:"expires_in"`
+		TokenType    string `json:"token_type"`
+		Error        string `json:"error"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&tokenResp); err != nil {
+		return nil, fmt.Errorf("failed to parse token response: %w", err)
+	}
 
-		if errorResp.Error == "invalid_grant" {
+	// Check for errors (Zoho may return error on HTTP 200 or non-200)
+	if tokenResp.Error != "" || resp.StatusCode != http.StatusOK {
+		errMsg := tokenResp.Error
+		if errMsg == "" {
+			errMsg = fmt.Sprintf("HTTP %d", resp.StatusCode)
+		}
+
+		switch errMsg {
+		case "invalid_grant":
 			return nil, &output.CLIError{
 				Message:  "Refresh token expired or revoked. Run: zoh auth login",
 				ExitCode: output.ExitAuth,
 			}
+		case "invalid_client_secret":
+			return nil, &output.CLIError{
+				Message:  "Client secret is invalid. Update it with: zoh config set client_secret YOUR_SECRET",
+				ExitCode: output.ExitAuth,
+			}
+		case "invalid_client":
+			return nil, &output.CLIError{
+				Message:  "Client ID is invalid. Update it with: zoh config set client_id YOUR_CLIENT_ID",
+				ExitCode: output.ExitAuth,
+			}
+		default:
+			return nil, fmt.Errorf("token refresh failed: %s", errMsg)
 		}
-
-		return nil, fmt.Errorf("token refresh failed: HTTP %d", resp.StatusCode)
 	}
 
-	// Parse response
-	var tokenResp struct {
-		AccessToken  string `json:"access_token"`
-		RefreshToken string `json:"refresh_token,omitempty"` // Zoho may issue new refresh token
-		ExpiresIn    int    `json:"expires_in"`              // Seconds
-		TokenType    string `json:"token_type"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&tokenResp); err != nil {
-		return nil, fmt.Errorf("failed to parse token response: %w", err)
+	if tokenResp.AccessToken == "" {
+		return nil, fmt.Errorf("token refresh returned empty access token")
 	}
 
 	// If a new refresh token was issued, update the secrets store

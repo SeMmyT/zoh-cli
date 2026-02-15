@@ -1,17 +1,24 @@
 package zoho
 
-// OrgResponse is the response from GET /api/organization/
-type OrgResponse struct {
+// AccountsResponse is the response from GET /api/accounts
+type AccountsResponse struct {
 	Status struct {
 		Code        int    `json:"code"`
 		Description string `json:"description"`
 	} `json:"status"`
-	Data struct {
-		OrganizationID int64  `json:"zoid"`
-		CompanyName    string `json:"companyName"`
-		UserCount      int    `json:"userCount"`
-		GroupCount     int    `json:"groupCount"`
-	} `json:"data"`
+	Data []AccountData `json:"data"`
+}
+
+// AccountData represents a single account from /api/accounts
+type AccountData struct {
+	AccountID string `json:"accountId"`
+	ZUID      int64  `json:"zuid"`
+	PolicyID  struct {
+		Zoid int64 `json:"zoid"`
+	} `json:"policyId"`
+	PrimaryEmailAddress string `json:"primaryEmailAddress"`
+	DisplayName         string `json:"displayName"`
+	Role                string `json:"role"`
 }
 
 // EmailAddress represents a Zoho user email address entry
@@ -113,7 +120,10 @@ type GroupListResponse struct {
 		Code        int    `json:"code"`
 		Description string `json:"description"`
 	} `json:"status"`
-	Data []Group `json:"data"`
+	Data struct {
+		Groups []Group `json:"groups"`
+		Count  int     `json:"count"`
+	} `json:"data"`
 }
 
 // GroupDetailResponse is the response from GET /api/organization/{zoid}/groups/{zgid}
@@ -218,7 +228,9 @@ type DomainListResponse struct {
 		Code        int    `json:"code"`
 		Description string `json:"description"`
 	} `json:"status"`
-	Data []Domain `json:"data"`
+	Data struct {
+		DomainVO []Domain `json:"domainVO"`
+	} `json:"data"`
 }
 
 // DomainDetailResponse is the response from GET /api/organization/{zoid}/domains/{domainName}

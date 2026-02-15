@@ -255,8 +255,8 @@ func (cmd *MailSettingsDisplayNameGetCmd) Run(sp *ServiceProvider, fp *Formatter
 		DisplayName  string `json:"displayName"`
 		EmailAddress string `json:"emailAddress"`
 	}{
-		DisplayName:  accountDetails.AccountDisplayName,
-		EmailAddress: accountDetails.EmailAddress,
+		DisplayName:  accountDetails.DisplayName,
+		EmailAddress: accountDetails.PrimaryEmailAddress,
 	}
 
 	return fp.Formatter.Print(displayInfo)
