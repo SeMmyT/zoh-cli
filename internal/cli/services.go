@@ -5,11 +5,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/semmy-space/zoh/internal/auth"
-	"github.com/semmy-space/zoh/internal/config"
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/secrets"
-	"github.com/semmy-space/zoh/internal/zoho"
+	"github.com/SeMmyT/zoh/internal/auth"
+	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/secrets"
+	"github.com/SeMmyT/zoh/internal/zoho"
 )
 
 // ServiceProvider lazily creates and caches Zoho service clients.

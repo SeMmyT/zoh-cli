@@ -10,7 +10,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/time/rate"
 
-	"github.com/semmy-space/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/config"
 )
 
 // Client is a region-aware HTTP client for Zoho APIs.

@@ -9,10 +9,10 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/semmy-space/zoh/internal/auth"
-	"github.com/semmy-space/zoh/internal/config"
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/secrets"
+	"github.com/SeMmyT/zoh/internal/auth"
+	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/secrets"
 )
 
 // AuthLoginCmd implements the auth login command

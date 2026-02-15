@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/semmy-space/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/config"
 )
 
 // MailAdminClient wraps the Zoho Client with mail admin-specific functionality

@@ -7,8 +7,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/zoho"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/zoho"
 )
 
 // SignatureRow is a display struct for signature list output with formatted fields

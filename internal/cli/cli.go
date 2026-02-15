@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/alecthomas/kong"
-	"github.com/semmy-space/zoh/internal/config"
-	"github.com/semmy-space/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/output"
 )
 
 // FormatterProvider wraps the formatter interface for Kong binding

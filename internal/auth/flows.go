@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/config"
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/pkg/browser"
+	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/pkg/browser"
 	"golang.org/x/oauth2"
 )
 

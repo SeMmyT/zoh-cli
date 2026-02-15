@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/zoho"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/zoho"
 )
 
 // parseDate parses a date string in either YYYY-MM-DD or RFC3339 format

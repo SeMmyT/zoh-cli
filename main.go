@@ -6,8 +6,8 @@ import (
 
 	"github.com/alecthomas/kong"
 	"github.com/posener/complete"
-	"github.com/semmy-space/zoh/internal/cli"
-	"github.com/semmy-space/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/cli"
+	"github.com/SeMmyT/zoh/internal/output"
 	"github.com/willabides/kongplete"
 )
 

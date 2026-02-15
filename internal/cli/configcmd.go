@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/semmy-space/zoh/internal/config"
-	"github.com/semmy-space/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/config"
+	"github.com/SeMmyT/zoh/internal/output"
 )
 
 // ConfigGetCmd implements config get command

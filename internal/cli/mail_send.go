@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/semmy-space/zoh/internal/output"
-	"github.com/semmy-space/zoh/internal/zoho"
+	"github.com/SeMmyT/zoh/internal/output"
+	"github.com/SeMmyT/zoh/internal/zoho"
 )
 
 // MailSendComposeCmd composes and sends a new email

@@ -1,4 +1,4 @@
-module github.com/semmy-space/zoh
+module github.com/SeMmyT/zoh
 
 go 1.24.0
 
